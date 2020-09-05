@@ -1,15 +1,18 @@
-﻿
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using MainPr.Models
-@inject SignInManager<User> SignInManager
-
+@inject UserManager<User> UserManager
 
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <p>@User.Identity.Name</p>
+            <p>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Login</p>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="" asp-controller="PAcc" asp-action="Acc">
+                <button type="submit" class="nav-link btn btn-link text-dark">Account</button>
+            </form>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">

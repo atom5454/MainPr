@@ -1,0 +1,41 @@
+﻿@model MainPr.Models.User
+
+@{
+    ViewData["Title"] = "Acc";
+}
+
+<h1>Account</h1>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NormalizedUserName)
+        </dt>
+        <dd class="col-sm-12">
+            @Html.DisplayFor(model => model.NormalizedUserName)
+        </dd>
+    </dl>
+</div>
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="PAcc" asp-action="Edit">Edit</a>
+</li>

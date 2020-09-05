@@ -10,6 +10,15 @@ namespace MainPr.Models
         {
             Database.EnsureCreated();
         }
+
+        public override DbSet<User> Users { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Firm> Firms { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
 }

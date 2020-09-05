@@ -23,7 +23,6 @@ namespace MainPr.Controllers
             return View(await userManager.Users.ToListAsync());
         }
 
-
         [HttpGet]
         public IActionResult Register()
         {
