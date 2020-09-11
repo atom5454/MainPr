@@ -25,5 +25,7 @@ namespace MainPr.Models
         public int FirmID { get; set; }
 
         public Firm Firms { get; set; }
+
+        public ICollection<Cart> Carts { get; set; }
     }
 }

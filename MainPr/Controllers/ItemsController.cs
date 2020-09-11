@@ -6,16 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MainPr.Controllers
 {
     public class ItemsController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly IWebHostEnvironment hostEnvironment;
 
-        public ItemsController(ApplicationContext context)
+        public ItemsController(ApplicationContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            this.hostEnvironment = hostEnvironment;
         }
 
         // GET: Items
@@ -56,10 +61,20 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemID,ItemName,Title,Price,FirmID")] Item item)
+        public async Task<IActionResult> Create([Bind("ItemID,ItemName,Title,Price,FirmID")] Item item, IFormFile titleImageFile)
         {
             if (ModelState.IsValid)
             {
+
+                if (titleImageFile != null)
+                {
+                    item.ImgPath = titleImageFile.FileName;
+                    using (var stream = new FileStream(Path.Combine(hostEnvironment.WebRootPath, "img/", titleImageFile.FileName), FileMode.Create))
+                    {
+                        titleImageFile.CopyTo(stream);
+                    }
+                }
+
                 _context.Add(item);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -101,15 +116,25 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemID,ItemName,Title,Price,FirmID")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("ItemID,ItemName,Title,Price,FirmID,ImgPath")] Item item, IFormFile titleImageFile)
         {
             if (id != item.ItemID)
             {
                 return NotFound();
             }
 
+            if (titleImageFile != null)
+            {
+                item.ImgPath = titleImageFile.FileName;
+                using (var stream = new FileStream(Path.Combine(hostEnvironment.WebRootPath, "img/", titleImageFile.FileName), FileMode.Create))
+                {
+                    titleImageFile.CopyTo(stream);
+                }
+            }
+
             if (ModelState.IsValid)
             {
+
                 try
                 {
                     _context.Update(item);
