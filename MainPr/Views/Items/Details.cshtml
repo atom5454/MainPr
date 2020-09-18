@@ -34,7 +34,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Firms.FirmID)
         </dd>
-
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ImgPath)
         </dt>
@@ -46,6 +45,7 @@
     </dl>
 </div>
 <div>
+    <a asp-controller="Carts" asp-action="AddToCart" asp-route-id="@Model.ItemID" asp-route-Countitem="Countitem" >AddToCart</a>
     <a asp-action="Edit" asp-route-id="@Model.ItemID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

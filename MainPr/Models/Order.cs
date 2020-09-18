@@ -16,9 +16,9 @@ namespace MainPr.Models
 
 
 
-        public ICollection<User> Users { get; set; }
+        public User Users { get; set; }
 
-        public ICollection<Cart> Carts { get; set; }
+        public ICollection<Cart> Carts_Order { get; set; }
 
     }
 }

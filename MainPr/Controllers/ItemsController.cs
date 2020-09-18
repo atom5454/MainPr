@@ -61,7 +61,7 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemID,ItemName,Title,Price,FirmID")] Item item, IFormFile titleImageFile)
+        public async Task<IActionResult> Create([Bind("ItemID,ItemName,Title,Price,FirmID,CountItems")] Item item, IFormFile titleImageFile)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemID,ItemName,Title,Price,FirmID,ImgPath")] Item item, IFormFile titleImageFile)
+        public async Task<IActionResult> Edit(int id, [Bind("ItemID,ItemName,Title,Price,FirmID,ImgPath,CountItems")] Item item, IFormFile titleImageFile)
         {
             if (id != item.ItemID)
             {

@@ -5,10 +5,12 @@ using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace MainPr.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
@@ -28,6 +30,7 @@ namespace MainPr.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

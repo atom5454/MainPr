@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MainPr.Models
 {
     public class Cart
@@ -17,6 +18,9 @@ namespace MainPr.Models
 
         public int StatusCartID { get; set; }
 
+
+        public Item Items { get; set; }
         public StatusCart StatusCarts { get; set; }
+        public Order Orders { get; set; }
     }
 }

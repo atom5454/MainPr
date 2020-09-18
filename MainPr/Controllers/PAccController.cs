@@ -14,8 +14,7 @@ namespace MainPr.Controllers
 
         //private UserManager<User> _userManager;
         private UserManager<User> _userManager;
-
-
+        
         public PAccController(UserManager<User> userManager)
         {
             _userManager = userManager;
@@ -43,7 +42,7 @@ namespace MainPr.Controllers
         public async Task<IActionResult> Edit()
         {
             var userid = _userManager.GetUserId(User);
-
+        
             User user = await _userManager.FindByIdAsync(userid);
             if (user == null)
             {

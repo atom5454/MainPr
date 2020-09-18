@@ -12,6 +12,7 @@ namespace MainPr.Models
 
         public string StatusName { get; set; }
 
+
         public ICollection<Cart> Carts { get; set; }
     }
 }

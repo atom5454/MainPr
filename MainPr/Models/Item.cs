@@ -19,7 +19,7 @@ namespace MainPr.Models
 
         public string ImgPath { get; set; }
 
-
+        public int CountItems { get; set; }
 
 
         public int FirmID { get; set; }

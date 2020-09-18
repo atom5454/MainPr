@@ -29,7 +29,7 @@ namespace MainPr.Controllers
         //    return ViewBag.login = user?.Login;
         //}
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             //if (User.Identity.IsAuthenticated)
             //{

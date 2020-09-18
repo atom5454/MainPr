@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace MainPr.Models
 {
@@ -16,6 +19,8 @@ namespace MainPr.Models
         public DbSet<Firm> Firms { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<StatusCart> StatusCarts { get; set; }
+
+
         public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

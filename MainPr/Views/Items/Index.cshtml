@@ -48,22 +48,11 @@
             <td class="display-field">
                 <img src="~/img/@item.ImgPath" width="150" height="150" />
             </td>
-            @*<td>
-            <img scr="@Url.Content(item.ImgPath)" width="250" height="250" alt="Image" />
-        </td>
-        <td>
-            <img scr="@item.ImgPath" width="250" height="250" alt="Image" />
-        </td>
-        <td>
-            <img src="@Html.DisplayFor(model =>item.ImgPath)" style="height:200px;width:200px;" />
-        </td>
-        <td>
-            <img src="@Html.Image()"/>
-        </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ItemID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ItemID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItemID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.ItemID">Delete</a> |
+                <a asp-controller="Carts" asp-action="AddToCart" asp-route-id="@item.ItemID" >AddToCart</a>
             </td>
         </tr>
         }

@@ -9,5 +9,7 @@ namespace MainPr.Models
     public class User : IdentityUser
     {
         public string Login { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
