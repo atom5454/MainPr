@@ -26,6 +26,6 @@ namespace MainPr.Models
 
         public Firm Firms { get; set; }
 
-        public ICollection<Cart> Carts { get; set; }
+        public ICollection<Orders> Carts { get; set; }
     }
 }

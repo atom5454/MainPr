@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace MainPr.Models
 {
 
-    public class Order
+    public class UsersOrder
     {
 
-        public int OrderID { get; set; }
+        public int UsersOrderID { get; set; }
 
         public string UserId { get; set; }
 
@@ -18,7 +18,7 @@ namespace MainPr.Models
 
         public User Users { get; set; }
 
-        public ICollection<Cart> Carts_Order { get; set; }
+        public ICollection<Orders> UserOrder_Orders { get; set; }
 
     }
 }

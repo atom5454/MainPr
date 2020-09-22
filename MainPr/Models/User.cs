@@ -10,6 +10,6 @@ namespace MainPr.Models
     {
         public string Login { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<UsersOrder> Orders { get; set; }
     }
 }

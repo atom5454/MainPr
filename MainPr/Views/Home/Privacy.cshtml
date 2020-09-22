@@ -3,5 +3,12 @@
     ViewData["Title"] = "Privacy Policy";
 }
 
+<table class="table">
+    <tr><td>Имя</td><td>Возраст</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.</td><td>@item.Login</td></tr>
+    }
+</table>
 
 <p>Use this page to detail your site's privacy policy.</p>

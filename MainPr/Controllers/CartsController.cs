@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace MainPr.Controllers
 {
@@ -22,70 +21,44 @@ namespace MainPr.Controllers
             _context = context;
         }
 
-        // GET: Carts
+        //GET: Carts
         public async Task<IActionResult> Index(string id)
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
             id = user?.Id;
 
             var applicationContext = _context.Carts
-                .Include(c => c.Items)
-                .Include(c => c.Orders)
                 .Include(c => c.StatusCarts)
-                .Where(c => c.Orders.UserId == id);
+                .Include(c => c.Orders)
+                .Where(c => c.Orders.UsersOrders.UserId == id);
             return View(await applicationContext.ToListAsync());
         }
 
-        public async Task<IActionResult> AddToCartAsync(string idUser, int id)
-        {
 
+        public async Task<IActionResult> AddToCartAsync(int id, string idUser)
+        {
             User user = await _userManager.GetUserAsync(HttpContext.User);
             idUser = user?.Id;
 
-            Order order = new Order();
-            order.UserId = idUser;
+            //Cart cart = new Cart();
+            //cart.StatusCartID = 1;
 
-            _context.Add(order);
-            _context.SaveChanges();
+            //_context.Add(cart);
+            //_context.SaveChanges();
 
-            int idOrder = order.OrderID; // Yes it's here
+            //int idCart = cart.CartID; // Yes it's here
 
-            var item = await _context.Items.FindAsync(id);
 
-            Cart cart = new Cart();
-            cart.ItemID = item.ItemID;
-            cart.Price = item.Price;
-            cart.StatusCartID = 1;
-            cart.Count_item = 1;
-            cart.OrderID = idOrder;
-
-            var check = _context.Carts
+            var order = _context.Orders
                 .Include(c => c.Items)
-                .Include(c => c.Orders)
-                .Include(c => c.StatusCarts)
-                .Where(c => c.Orders.UserId == idUser)
-                .FirstOrDefault(c =>c.ItemID == item.ItemID);
+                .Include(c => c.UsersOrders)
+                .Where(c => c.CartID == null)
+                .FirstOrDefault(c => c.UsersOrders.UserId == idUser);
 
-            if(check == null)
-            {
-                _context.Add(cart);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else if(cart.ItemID == check.ItemID)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            return View(order);
 
-
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
-
 
 
 
@@ -100,10 +73,8 @@ namespace MainPr.Controllers
             }
 
             var cart = await _context.Carts
-                .Include(c => c.Items)
-                .Include(c => c.Orders)
                 .Include(c => c.StatusCarts)
-                .FirstOrDefaultAsync(m => m.ItemID == id);
+                .FirstOrDefaultAsync(m => m.CartID == id);
             if (cart == null)
             {
                 return NotFound();
@@ -115,8 +86,6 @@ namespace MainPr.Controllers
         // GET: Carts/Create
         public IActionResult Create()
         {
-            ViewData["ItemID"] = new SelectList(_context.Items, "ItemID", "ItemID");
-            ViewData["OrderID"] = new SelectList(_context.Orders, "OrderID", "OrderID");
             ViewData["StatusCartID"] = new SelectList(_context.StatusCarts, "StatusCartID", "StatusCartID");
             return View();
         }
@@ -126,7 +95,7 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemID,OrderID,Count_item,Price,StatusCartID")] Cart cart)
+        public async Task<IActionResult> Create([Bind("CartID,StatusCartID")] Cart cart)
         {
             if (ModelState.IsValid)
             {
@@ -134,27 +103,23 @@ namespace MainPr.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemID"] = new SelectList(_context.Items, "ItemID", "ItemID", cart.ItemID);
-            ViewData["OrderID"] = new SelectList(_context.Orders, "OrderID", "OrderID", cart.OrderID);
             ViewData["StatusCartID"] = new SelectList(_context.StatusCarts, "StatusCartID", "StatusCartID", cart.StatusCartID);
             return View(cart);
         }
 
         // GET: Carts/Edit/5
-        public async Task<IActionResult> Edit(int? id, int order)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var cart = await _context.Carts.FindAsync(id, order);
+            var cart = await _context.Carts.FindAsync(id);
             if (cart == null)
             {
                 return NotFound();
             }
-            ViewData["ItemID"] = new SelectList(_context.Items, "ItemID", "ItemID", cart.ItemID);
-            ViewData["OrderID"] = new SelectList(_context.Orders, "OrderID", "OrderID", cart.OrderID);
             ViewData["StatusCartID"] = new SelectList(_context.StatusCarts, "StatusCartID", "StatusCartID", cart.StatusCartID);
             return View(cart);
         }
@@ -164,9 +129,9 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemID,OrderID,Count_item,Price,StatusCartID")] Cart cart)
+        public async Task<IActionResult> Edit(int id, [Bind("CartID,StatusCartID")] Cart cart)
         {
-            if (id != cart.ItemID)
+            if (id != cart.CartID)
             {
                 return NotFound();
             }
@@ -180,7 +145,7 @@ namespace MainPr.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CartExists(cart.ItemID))
+                    if (!CartExists(cart.CartID))
                     {
                         return NotFound();
                     }
@@ -191,21 +156,25 @@ namespace MainPr.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemID"] = new SelectList(_context.Items, "ItemID", "ItemID", cart.ItemID);
-            ViewData["OrderID"] = new SelectList(_context.Orders, "OrderID", "OrderID", cart.OrderID);
             ViewData["StatusCartID"] = new SelectList(_context.StatusCarts, "StatusCartID", "StatusCartID", cart.StatusCartID);
             return View(cart);
         }
 
         // GET: Carts/Delete/5
-        public async Task<IActionResult> Delete(int id, int order)
+        public async Task<IActionResult> Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var cart = await _context.Carts
-                .Include(c => c.Items)
-                .Include(c => c.Orders)
                 .Include(c => c.StatusCarts)
-                .Where(c=> c.OrderID == order)
-                .FirstOrDefaultAsync(m => m.ItemID == id);
+                .FirstOrDefaultAsync(m => m.CartID == id);
+            if (cart == null)
+            {
+                return NotFound();
+            }
 
             return View(cart);
         }
@@ -213,12 +182,9 @@ namespace MainPr.Controllers
         // POST: Carts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, int order)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cart = await _context.Carts
-                .Where(c => c.OrderID == order)
-                .FirstOrDefaultAsync(m => m.ItemID == id);
-
+            var cart = await _context.Carts.FindAsync(id);
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -226,7 +192,7 @@ namespace MainPr.Controllers
 
         private bool CartExists(int id)
         {
-            return _context.Carts.Any(e => e.ItemID == id);
+            return _context.Carts.Any(e => e.CartID == id);
         }
     }
 }
