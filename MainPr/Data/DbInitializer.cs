@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MainPr.Models;
 using MainPr.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace MainPr.Data
 {
@@ -14,7 +15,7 @@ namespace MainPr.Data
             context.Database.EnsureCreated();
 
             // Look for any students.
-            if (context.Users.Any())
+            if (context.Items.Any())
             {
                 return;   // DB has been seeded
             }
@@ -23,6 +24,7 @@ namespace MainPr.Data
             {
                 new Item
                 {
+                    ItemID = 1,
                     ItemName = "Car",
                     Title = "Best car",
                     Price = 150,
@@ -32,6 +34,7 @@ namespace MainPr.Data
                 },
                 new Item
                 {
+                    ItemID = 2,
                     ItemName = "Plane",
                     Title = "Best plane",
                     Price = 200,
@@ -41,6 +44,7 @@ namespace MainPr.Data
                 },
                 new Item
                 {
+                    ItemID = 3,
                     ItemName = "Car",
                     Title = "Best car",
                     Price = 300,
@@ -80,21 +84,26 @@ namespace MainPr.Data
             {
                 new User
                 {
+                    Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                     UserName = "atom54@gmail.com",
                     NormalizedUserName = "ATOM54@GMAIL.COM",
                     Email = "atom54@gmail.com",
                     NormalizedEmail = "ATOM54@GMAIL.COM",
-                    EmailConfirmed = false,
-                    PasswordHash = "AQAAAAEAACcQAAAAEOM/PM5mn7z60pUjVHVJy1ogHl20cVZoRWlFVRnF2SpCMq8wd1bjPFfyGlGG8zNCtw==",
+                    EmailConfirmed = true,
+                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "atom54@gmail.com"),
+                    SecurityStamp = string.Empty,
                     Login = "atom54",
                 },
                 new User
                 {
+                    Id = "3b62472e-4f66-49fa-a20f-e7685b9125d8",
                     UserName = "peppo@gmail.com",
                     NormalizedUserName = "PEPPO@GMAIL.COM",
                     Email = "peppo@gmail.com",
                     NormalizedEmail = "PEPPO@GMAIL.COM",
-                    EmailConfirmed = false,
+                    EmailConfirmed = true,
+                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "peppo@gmail.com"),
+                    SecurityStamp = string.Empty,
                     Login = "peppo",
                 },
             };

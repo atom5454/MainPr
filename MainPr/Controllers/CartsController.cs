@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MainPr.Controllers
 {
@@ -29,35 +30,44 @@ namespace MainPr.Controllers
 
             var applicationContext = _context.Carts
                 .Include(c => c.StatusCarts)
+                .Include(c => c.Orders.Items)
                 .Include(c => c.Orders)
                 .Where(c => c.Orders.UsersOrders.UserId == id);
             return View(await applicationContext.ToListAsync());
         }
 
-
-        public async Task<IActionResult> AddToCartAsync(int id, string idUser)
+        [Obsolete]
+        public async Task<IActionResult> AddToCartAsync( string idUser)
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
             idUser = user?.Id;
 
-            //Cart cart = new Cart();
-            //cart.StatusCartID = 1;
-
-            //_context.Add(cart);
+            //Cart test = new Cart();
+            //_context.Add(test);
             //_context.SaveChanges();
 
-            //int idCart = cart.CartID; // Yes it's here
+            //int idCart = test.CartID; // Yes it's here
+
+            var applicationContext = _context.Orders
+                .Include(o => o.Items)
+                .Include(o => o.UsersOrders)
+                .Where(o => o.UsersOrders.UserId == idUser);
+
+            var orders = await applicationContext.ToListAsync();
+
+            foreach (var item in orders)
+            {
+                Cart x = new Cart();
+                x.CartID += 1;
+                x.StatusCartID = 2;
+                x.UsersOrderID = item.UsersOrderID;
+                x.ItemID = item.ItemID;
+                _context.Add(x);
+                _context.SaveChanges();
+            }
 
 
-            var order = _context.Orders
-                .Include(c => c.Items)
-                .Include(c => c.UsersOrders)
-                .Where(c => c.CartID == null)
-                .FirstOrDefault(c => c.UsersOrders.UserId == idUser);
-
-            return View(order);
-
-            //return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
 

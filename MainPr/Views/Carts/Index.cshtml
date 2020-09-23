@@ -15,7 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.StatusCarts)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.ItemID)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +25,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.StatusCarts.StatusCartID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.Items.ItemName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CartID">Edit</a> |

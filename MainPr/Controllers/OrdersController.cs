@@ -43,8 +43,10 @@ namespace MainPr.Controllers
             User user = await _userManager.GetUserAsync(HttpContext.User);
             idUser = user?.Id;
 
-            UsersOrder order = new UsersOrder();
-            order.UserId = idUser;
+            UsersOrder order = new UsersOrder
+            {
+                UserId = idUser
+            };
 
             _context.Add(order);
             _context.SaveChanges();
@@ -53,11 +55,14 @@ namespace MainPr.Controllers
 
             var item = await _context.Items.FindAsync(id);
 
-            Orders cart = new Orders();
-            cart.ItemID = item.ItemID;
-            cart.Price = item.Price;
-            cart.CountBuy_item = 1;
-            cart.UsersOrderID = idOrder;
+            Orders cart = new Orders
+            {
+                ItemID = item.ItemID,
+                Price = item.Price,
+                CountBuy_item = 1,
+                StatusOrderID = 1,
+                UsersOrderID = idOrder
+            };
 
             var check = _context.Orders
                 .Include(c => c.Items)
@@ -73,6 +78,9 @@ namespace MainPr.Controllers
             }
             else if (cart.ItemID == check.ItemID)
             {
+                check.CountBuy_item += 1;
+                check.Price += cart.Price;
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
