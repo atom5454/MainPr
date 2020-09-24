@@ -30,7 +30,8 @@ namespace MainPr.Controllers
             var applicationContext = _context.Orders
                 .Include(o => o.Items)
                 .Include(o => o.UsersOrders)
-                .Where(o => o.UsersOrders.UserId == id);
+                .Where(o => o.UsersOrders.UserId == id)
+                .Where(o =>o.StatusOrderID == 1);
             return View(await applicationContext.ToListAsync());
         }
 
@@ -68,6 +69,7 @@ namespace MainPr.Controllers
                 .Include(c => c.Items)
                 .Include(c => c.UsersOrders)
                 .Where(c => c.UsersOrders.UserId == idUser)
+                .Where(o => o.StatusOrderID == 1)
                 .FirstOrDefault(c => c.ItemID == item.ItemID);
 
             if (check == null)
@@ -76,7 +78,7 @@ namespace MainPr.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else if (cart.ItemID == check.ItemID)
+            else if (cart.ItemID == check.ItemID && cart.StatusOrderID == check.StatusOrderID)
             {
                 check.CountBuy_item += 1;
                 check.Price += cart.Price;

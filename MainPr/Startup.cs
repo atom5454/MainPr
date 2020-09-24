@@ -29,7 +29,8 @@ namespace MainPr
         {
             Configuration.Bind("MainPr", new Config());
 
-            services.AddDbContext<ApplicationContext>(x => x.UseSqlServer(Config.ConnectionStrings));
+            services.AddDbContext<ApplicationContext>(x => 
+                x.UseSqlServer(Config.ConnectionStrings));
 
             services.AddIdentity<User, IdentityRole>(opt =>
                 {

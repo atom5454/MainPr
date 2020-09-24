@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MainPr.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20200917090633_Add_Count_Items")]
-    partial class Add_Count_Items
+    [Migration("20200923144452_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,26 +23,23 @@ namespace MainPr.Migrations
 
             modelBuilder.Entity("MainPr.Models.Cart", b =>
                 {
+                    b.Property<int>("CartID")
+                        .HasColumnType("int");
+
                     b.Property<int>("ItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int>("UsersOrderID")
                         .HasColumnType("int");
-
-                    b.Property<int>("Count_item")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.Property<int>("StatusCartID")
                         .HasColumnType("int");
 
-                    b.HasKey("ItemID", "OrderID");
-
-                    b.HasIndex("OrderID");
+                    b.HasKey("CartID", "ItemID", "UsersOrderID");
 
                     b.HasIndex("StatusCartID");
+
+                    b.HasIndex("ItemID", "UsersOrderID");
 
                     b.ToTable("Carts");
                 });
@@ -60,6 +57,18 @@ namespace MainPr.Migrations
                     b.HasKey("FirmID");
 
                     b.ToTable("Firms");
+
+                    b.HasData(
+                        new
+                        {
+                            FirmID = 1,
+                            FirmName = "SpaceX"
+                        },
+                        new
+                        {
+                            FirmID = 2,
+                            FirmName = "KSP"
+                        });
                 });
 
             modelBuilder.Entity("MainPr.Models.Item", b =>
@@ -92,21 +101,62 @@ namespace MainPr.Migrations
                     b.HasIndex("FirmID");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemID = 1,
+                            CountItems = 50,
+                            FirmID = 1,
+                            ImgPath = "8ipwnn.jpg",
+                            ItemName = "Car",
+                            Price = 150f,
+                            Title = "Best car"
+                        },
+                        new
+                        {
+                            ItemID = 2,
+                            CountItems = 50,
+                            FirmID = 1,
+                            ImgPath = "Morning_Rays.jpg",
+                            ItemName = "Plane",
+                            Price = 200f,
+                            Title = "Best plane"
+                        },
+                        new
+                        {
+                            ItemID = 3,
+                            CountItems = 50,
+                            FirmID = 2,
+                            ImgPath = "priroda_gory_nebo_ozero_oblaka_81150_1920x1080.jpg",
+                            ItemName = "Car",
+                            Price = 300f,
+                            Title = "Best car"
+                        });
                 });
 
-            modelBuilder.Entity("MainPr.Models.Order", b =>
+            modelBuilder.Entity("MainPr.Models.Orders", b =>
                 {
-                    b.Property<int>("OrderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UsersOrderID")
+                        .HasColumnType("int");
 
-                    b.HasKey("OrderID");
+                    b.Property<int>("CountBuy_item")
+                        .HasColumnType("int");
 
-                    b.HasIndex("UserId");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StatusOrderID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemID", "UsersOrderID");
+
+                    b.HasIndex("StatusOrderID");
+
+                    b.HasIndex("UsersOrderID");
 
                     b.ToTable("Orders");
                 });
@@ -124,6 +174,45 @@ namespace MainPr.Migrations
                     b.HasKey("StatusCartID");
 
                     b.ToTable("StatusCarts");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusCartID = 1,
+                            StatusName = "In processing"
+                        },
+                        new
+                        {
+                            StatusCartID = 2,
+                            StatusName = "Accepted"
+                        });
+                });
+
+            modelBuilder.Entity("MainPr.Models.StatusOrder", b =>
+                {
+                    b.Property<int>("StatusOrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StatusName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StatusOrderID");
+
+                    b.ToTable("StatusOrder");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusOrderID = 1,
+                            StatusName = "Wait"
+                        },
+                        new
+                        {
+                            StatusOrderID = 2,
+                            StatusName = "Accepted"
+                        });
                 });
 
             modelBuilder.Entity("MainPr.Models.User", b =>
@@ -192,6 +281,59 @@ namespace MainPr.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f8cf4ae3-1cc3-4f37-9cbe-8d24e414448c",
+                            Email = "atom54@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Login = "atom54",
+                            NormalizedEmail = "ATOM54@GMAIL.COM",
+                            NormalizedUserName = "ATOM54@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIZcm/zWyRtQ9Fdx63o5lYKejFId+2EnJsp0+FR80CMN6ZZdSABa9XNCQFRxfmEXOQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "atom54@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3b62472e-4f66-49fa-a20f-e7685b9125d8",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "498864df-9180-4022-bb13-e0d14cf96da9",
+                            Email = "peppo@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Login = "peppo",
+                            NormalizedEmail = "PEPPO@GMAIL.COM",
+                            NormalizedUserName = "PEPPO@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMCevGt5p12BshHBA/RrVGRsDfvBwEYWsU0XV0pgmiyos7ekIFrb1c8QnyXl2tDywA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "peppo@gmail.com"
+                        });
+                });
+
+            modelBuilder.Entity("MainPr.Models.UsersOrder", b =>
+                {
+                    b.Property<int>("UsersOrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UsersOrderID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UsersOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -327,21 +469,15 @@ namespace MainPr.Migrations
 
             modelBuilder.Entity("MainPr.Models.Cart", b =>
                 {
-                    b.HasOne("MainPr.Models.Item", "Items")
-                        .WithMany("Carts")
-                        .HasForeignKey("ItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MainPr.Models.Order", "Orders")
-                        .WithMany("Carts_Order")
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MainPr.Models.StatusCart", "StatusCarts")
                         .WithMany("Carts")
                         .HasForeignKey("StatusCartID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MainPr.Models.Orders", "Orders")
+                        .WithMany("Carts")
+                        .HasForeignKey("ItemID", "UsersOrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -355,7 +491,28 @@ namespace MainPr.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MainPr.Models.Order", b =>
+            modelBuilder.Entity("MainPr.Models.Orders", b =>
+                {
+                    b.HasOne("MainPr.Models.Item", "Items")
+                        .WithMany("Carts")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MainPr.Models.StatusOrder", "StatusOrder")
+                        .WithMany("Orders")
+                        .HasForeignKey("StatusOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MainPr.Models.UsersOrder", "UsersOrders")
+                        .WithMany("UserOrder_Orders")
+                        .HasForeignKey("UsersOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MainPr.Models.UsersOrder", b =>
                 {
                     b.HasOne("MainPr.Models.User", "Users")
                         .WithMany("Orders")

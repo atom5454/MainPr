@@ -37,35 +37,73 @@ namespace MainPr.Controllers
         }
 
         [Obsolete]
-        public async Task<IActionResult> AddToCartAsync( string idUser)
+        public async Task<IActionResult> AddToCartAsync( string idUser, int query)
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
             idUser = user?.Id;
 
-            //Cart test = new Cart();
-            //_context.Add(test);
-            //_context.SaveChanges();
 
-            //int idCart = test.CartID; // Yes it's here
+            //var test_orders = _context.Orders
+            //    .Include(o => o.Items)
+            //    .Include(o => o.UsersOrders)
+            //    .Where(o => o.StatusOrderID == 1)
+            //    .FirstOrDefault(o => o.UsersOrders.UserId == idUser);
 
-            var applicationContext = _context.Orders
-                .Include(o => o.Items)
-                .Include(o => o.UsersOrders)
-                .Where(o => o.UsersOrders.UserId == idUser);
+            //var check = _context.Carts
+            //    .Include(o => o.Orders)
+            //    .Include(o => o.Orders.UsersOrders)
+            //    .Where(o => o.ItemID == test_orders.ItemID)
+            //    .FirstOrDefault(o => o.Orders.UsersOrders.UserId == idUser);
 
-            var orders = await applicationContext.ToListAsync();
+            //if(check == null)
+            //{
+                try
+                {
+                        query = (from e in _context.Carts
+                            select e.CartID)
+                            .Max();
+                }
+                catch
+                {
+                    query = 0;
+                }
 
-            foreach (var item in orders)
-            {
-                Cart x = new Cart();
-                x.CartID += 1;
-                x.StatusCartID = 2;
-                x.UsersOrderID = item.UsersOrderID;
-                x.ItemID = item.ItemID;
-                _context.Add(x);
+                query += 1;
+
+                var applicationContext = _context.Orders
+                    .Include(o => o.Items)
+                    .Include(o => o.UsersOrders)
+                    .Where(o => o.StatusOrderID == 1)
+                    .Where(o => o.UsersOrders.UserId == idUser);
+                var orders = await applicationContext.ToListAsync();
+
+
+                (from p in _context.Orders
+                 where p.StatusOrderID == 1
+                 where p.UsersOrders.UserId == idUser
+                 select p).ToList().ForEach(x => x.StatusOrderID = 2);
+
                 _context.SaveChanges();
-            }
 
+
+                foreach (var item in orders)
+                {
+                    Cart x = new Cart();
+                    x.CartID = query;
+                    x.StatusCartID = 2;
+                    x.UsersOrderID = item.UsersOrderID;
+                    x.ItemID = item.ItemID;
+                    _context.Add(x);
+                    _context.SaveChanges();
+                }
+
+                return RedirectToAction(nameof(Index));
+
+            //}
+            //else if (check.ItemID == test_orders.ItemID && check.Orders.UsersOrders.UserId == idUser && check.StatusCartID == 1)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             return RedirectToAction(nameof(Index));
         }

@@ -14,11 +14,30 @@ namespace MainPr.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
             if (context.Items.Any())
             {
-                return;   // DB has been seeded
+                return;   
             }
+
+            var firms = new Firm[]
+            {
+                new Firm
+                {
+                    FirmID = 1,
+                    FirmName = "SpaceX"
+                },
+                new Firm
+                {
+                    FirmID = 2,
+                    FirmName = "KSP"
+                }
+            };
+
+            foreach (Firm i in firms)
+            {
+                context.Firms.Add(i);
+            }
+            context.SaveChanges();
 
             var items = new Item[]
             {
@@ -51,7 +70,7 @@ namespace MainPr.Data
                     ImgPath = "priroda_gory_nebo_ozero_oblaka_81150_1920x1080.jpg",
                     CountItems = 50,
                     FirmID = 2,
-                },
+                }
             };
 
             foreach (Item s in items)
@@ -60,25 +79,6 @@ namespace MainPr.Data
             }
             context.SaveChanges();
 
-            var firms = new Firm[]
-            {
-                new Firm
-                {
-                    FirmID = 1,
-                    FirmName = "SpaceX"
-                },
-                new Firm
-                {
-                    FirmID = 2,
-                    FirmName = "KSP"
-                },
-            };
-
-            foreach (Firm i in firms)
-            {
-                context.Firms.Add(i);
-            }
-            context.SaveChanges();
 
             var users = new User[]
             {
@@ -105,7 +105,7 @@ namespace MainPr.Data
                     PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "peppo@gmail.com"),
                     SecurityStamp = string.Empty,
                     Login = "peppo",
-                },
+                }
             };
 
             foreach (User d in users)
@@ -125,7 +125,7 @@ namespace MainPr.Data
                 {
                     StatusCartID = 2,
                     StatusName = "Accepted",
-                },
+                }
             };
 
             foreach (StatusCart c in status)
