@@ -19,10 +19,15 @@
                 <input asp-for="CountBuy_item" class="form-control" />
                 <span asp-validation-for="CountBuy_item" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden="true">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden="true">
+                <label asp-for="StatusOrderID" class="control-label"></label>
+                <input asp-for="StatusOrderID" class="form-control" />
+                <span asp-validation-for="StatusOrderID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

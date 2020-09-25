@@ -35,9 +35,6 @@ namespace MainPr.Controllers
             return View(await applicationContext.ToListAsync());
         }
 
-
-
-
         public async Task<IActionResult> AddToOtrderAsync(string idUser, int id)
         {
 
@@ -92,8 +89,6 @@ namespace MainPr.Controllers
 
 
 
-
-
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -141,14 +136,14 @@ namespace MainPr.Controllers
         }
 
         // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? userId)
         {
-            if (id == null)
+            if (id == null )
             {
                 return NotFound();
             }
 
-            var orders = await _context.Orders.FindAsync(id);
+            var orders = await _context.Orders.FindAsync(id, userId);
             if (orders == null)
             {
                 return NotFound();
@@ -161,9 +156,9 @@ namespace MainPr.Controllers
         // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemID,UsersOrderID,CartID,CountBuy_item,Price")] Orders orders)
+        public async Task<IActionResult> Edit(int? id, Orders orders)
         {
             if (id != orders.ItemID)
             {
@@ -194,6 +189,8 @@ namespace MainPr.Controllers
             ViewData["UsersOrderID"] = new SelectList(_context.UsersOrders, "UsersOrderID", "UsersOrderID", orders.UsersOrderID);
             return View(orders);
         }
+
+
 
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)

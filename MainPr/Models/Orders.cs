@@ -15,6 +15,7 @@ namespace MainPr.Models
 
         public int StatusOrderID { get; set; }
 
+        [Range(0, 5)]
         public int CountBuy_item { get; set; }
         public double Price { get; set; }
 
