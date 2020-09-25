@@ -12,24 +12,13 @@ namespace MainPr.Controllers
     public class PAccController : Controller
     {
 
-        //private UserManager<User> _userManager;
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
         
         public PAccController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-
-        //public async Task<IActionResult> AccE(User userdet)
-        //{
-        //    IdentityResult x = await _userManager.UpdateAsync(userdet);
-        //    if (x.Succeeded)
-        //    {
-        //        return RedirectToAction("Privacy", "Home");
-        //    }
-        //    return View(userdet);
-        //}
 
         public IActionResult Acc()
         {
@@ -83,6 +72,17 @@ namespace MainPr.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            //var userid = _userManager.GetUserId(User);
+            User user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+            }
+            return RedirectToAction("Index");
+        }
 
     }
 }

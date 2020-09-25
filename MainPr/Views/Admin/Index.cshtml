@@ -1,0 +1,10 @@
+﻿@model IEnumerable<MainPr.Models.User>
+@{
+    ViewBag.Title = "Users List";
+}
+
+<p>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="All_Users">Users</a>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Firms" asp-action="Index">Firms</a>
+    <a class="btn btn-sm btn-danger" asp-area="" asp-controller="Admin" asp-action="AcceptCart">Carts</a>
+</p>

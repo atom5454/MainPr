@@ -7,11 +7,10 @@
     @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <p>@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Login</p>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="PAcc" asp-action="Acc">
-                <button type="submit" class="nav-link btn btn-link text-dark">Account</button>
+                <button type="submit" class="nav-link btn btn-link text-dark">@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Login</button>
             </form>
         </li>
         <li class="nav-item">

@@ -12,7 +12,7 @@ namespace MainPr.Controllers
 {
     public class HomeController : Controller
     {
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<HomeController> _logger;
 
 
@@ -29,7 +29,7 @@ namespace MainPr.Controllers
         //    return ViewBag.login = user?.Login;
         //}
 
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
             //if (User.Identity.IsAuthenticated)
             //{

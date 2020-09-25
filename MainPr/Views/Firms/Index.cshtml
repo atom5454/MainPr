@@ -4,10 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<p>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="All_Users">Users</a>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Firms" asp-action="Index">Firms</a>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="AcceptCart">Carts</a>
+</p>
+
+<h1>Firms Panel</h1>
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-sm btn-primary" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -25,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.FirmName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FirmID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FirmID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FirmID">Delete</a>
+                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.FirmID">Edit</a>
+                <a class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.FirmID">Details</a>
+                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.FirmID">Delete</a>
             </td>
         </tr>
 }

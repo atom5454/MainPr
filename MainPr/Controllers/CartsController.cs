@@ -88,11 +88,13 @@ namespace MainPr.Controllers
 
                 foreach (var item in orders)
                 {
-                    Cart x = new Cart();
-                    x.CartID = query;
-                    x.StatusCartID = 2;
-                    x.UsersOrderID = item.UsersOrderID;
-                    x.ItemID = item.ItemID;
+                    Cart x = new Cart
+                    {
+                        CartID = query,
+                        StatusCartID = 1,
+                        UsersOrderID = item.UsersOrderID,
+                        ItemID = item.ItemID
+                    };
                     _context.Add(x);
                     _context.SaveChanges();
                 }
@@ -105,7 +107,6 @@ namespace MainPr.Controllers
             //    return RedirectToAction("Index", "Home");
             //}
 
-            return RedirectToAction(nameof(Index));
         }
 
 
@@ -209,7 +210,7 @@ namespace MainPr.Controllers
         }
 
         // GET: Carts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? iduser, int? iditem)
         {
             if (id == null)
             {
@@ -218,6 +219,8 @@ namespace MainPr.Controllers
 
             var cart = await _context.Carts
                 .Include(c => c.StatusCarts)
+                //.Where(c => c.UsersOrderID == iduser)
+                //.Where(c => c.ItemID == iditem)
                 .FirstOrDefaultAsync(m => m.CartID == id);
             if (cart == null)
             {
@@ -230,9 +233,13 @@ namespace MainPr.Controllers
         // POST: Carts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, int iduser, int iditem)
         {
-            var cart = await _context.Carts.FindAsync(id);
+            var cart = await _context.Carts
+                .Where(c => c.UsersOrderID == iduser)
+                .Where(c => c.ItemID == iditem)
+                .FirstOrDefaultAsync(m => m.CartID == id);
+                //.FindAsync(id, iduser, iditem);
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
