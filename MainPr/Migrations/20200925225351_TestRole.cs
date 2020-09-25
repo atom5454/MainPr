@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MainPr.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class TestRole : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -295,15 +295,6 @@ namespace MainPr.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Login", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "f8cf4ae3-1cc3-4f37-9cbe-8d24e414448c", "atom54@gmail.com", true, false, null, "atom54", "ATOM54@GMAIL.COM", "ATOM54@GMAIL.COM", "AQAAAAEAACcQAAAAEIZcm/zWyRtQ9Fdx63o5lYKejFId+2EnJsp0+FR80CMN6ZZdSABa9XNCQFRxfmEXOQ==", null, false, "", false, "atom54@gmail.com" },
-                    { "3b62472e-4f66-49fa-a20f-e7685b9125d8", 0, "498864df-9180-4022-bb13-e0d14cf96da9", "peppo@gmail.com", true, false, null, "peppo", "PEPPO@GMAIL.COM", "PEPPO@GMAIL.COM", "AQAAAAEAACcQAAAAEMCevGt5p12BshHBA/RrVGRsDfvBwEYWsU0XV0pgmiyos7ekIFrb1c8QnyXl2tDywA==", null, false, "", false, "peppo@gmail.com" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Firms",
                 columns: new[] { "FirmID", "FirmName" },
                 values: new object[,]
@@ -318,7 +309,8 @@ namespace MainPr.Migrations
                 values: new object[,]
                 {
                     { 1, "In processing" },
-                    { 2, "Accepted" }
+                    { 2, "Accepted" },
+                    { 3, "Rejected" }
                 });
 
             migrationBuilder.InsertData(

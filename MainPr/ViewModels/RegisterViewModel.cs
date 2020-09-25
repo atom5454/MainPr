@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace MainPr.ViewModels
 {
     public class RegisterViewModel
     {
+        public IdentityRole Role { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }

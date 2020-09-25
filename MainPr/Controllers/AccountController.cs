@@ -10,14 +10,15 @@ namespace MainPr.Controllers
 {
     public class AccountController : Controller
     {
-
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        RoleManager<IdentityRole> roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<IActionResult> List()
@@ -36,12 +37,14 @@ namespace MainPr.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User {Email = model.Email,  UserName = model.Email, Login = model.Login, };
+
+                User user = new User {Email = model.Email,  UserName = model.Email, Login = model.Login };
                 // добавляем пользователя
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // установка куки для пользователя
+                    await userManager.AddToRoleAsync(user, "user");
                     await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }

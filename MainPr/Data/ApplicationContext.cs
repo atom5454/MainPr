@@ -71,31 +71,6 @@ namespace MainPr.Models
                     CountItems = 50,
                     FirmID = 2,
                 });
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
-                    UserName = "atom54@gmail.com",
-                    NormalizedUserName = "ATOM54@GMAIL.COM",
-                    Email = "atom54@gmail.com",
-                    NormalizedEmail = "ATOM54@GMAIL.COM",
-                    EmailConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "atom54@gmail.com"),
-                    SecurityStamp = string.Empty,
-                    Login = "atom54",
-                },
-                new User
-                {
-                    Id = "3b62472e-4f66-49fa-a20f-e7685b9125d8",
-                    UserName = "peppo@gmail.com",
-                    NormalizedUserName = "PEPPO@GMAIL.COM",
-                    Email = "peppo@gmail.com",
-                    NormalizedEmail = "PEPPO@GMAIL.COM",
-                    EmailConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "peppo@gmail.com"),
-                    SecurityStamp = string.Empty,
-                    Login = "peppo",
-                });
 
             modelBuilder.Entity<StatusCart>().HasData(
                 new StatusCart
@@ -107,6 +82,11 @@ namespace MainPr.Models
                 {
                     StatusCartID = 2,
                     StatusName = "Accepted",
+                },
+                new StatusCart
+                {
+                    StatusCartID = 3,
+                    StatusName = "Rejected",
                 });
             modelBuilder.Entity<StatusOrder>().HasData(
                 new StatusOrder

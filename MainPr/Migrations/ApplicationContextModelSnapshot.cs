@@ -183,6 +183,11 @@ namespace MainPr.Migrations
                         {
                             StatusCartID = 2,
                             StatusName = "Accepted"
+                        },
+                        new
+                        {
+                            StatusCartID = 3,
+                            StatusName = "Rejected"
                         });
                 });
 
@@ -279,42 +284,6 @@ namespace MainPr.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "84c4965c-9c4e-49b0-944b-4f8323235e54",
-                            Email = "atom54@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            Login = "atom54",
-                            NormalizedEmail = "ATOM54@GMAIL.COM",
-                            NormalizedUserName = "ATOM54@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKNoaTGYUyJT3gthHQhPRlQb4N+Sl/4WazvOoR60UBcRw3ZAWfIkNR+zWe3l+lIRFA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "atom54@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "3b62472e-4f66-49fa-a20f-e7685b9125d8",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "64a9a90e-4160-4745-a5bb-b7e5e1258d70",
-                            Email = "peppo@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            Login = "peppo",
-                            NormalizedEmail = "PEPPO@GMAIL.COM",
-                            NormalizedUserName = "PEPPO@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMlA12yWjZLptGlwxluGZzTE5tJdmTkQ9rUxwNDiEh9Rmfy8gZ17jf4Ez1P3CWKabQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "peppo@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("MainPr.Models.UsersOrder", b =>

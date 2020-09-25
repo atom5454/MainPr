@@ -16,7 +16,7 @@ namespace MainPr.Data
 
             if (context.Items.Any())
             {
-                return;   
+                return;
             }
 
             var firms = new Firm[]
@@ -80,39 +80,7 @@ namespace MainPr.Data
             context.SaveChanges();
 
 
-            var users = new User[]
-            {
-                new User
-                {
-                    Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
-                    UserName = "atom54@gmail.com",
-                    NormalizedUserName = "ATOM54@GMAIL.COM",
-                    Email = "atom54@gmail.com",
-                    NormalizedEmail = "ATOM54@GMAIL.COM",
-                    EmailConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "atom54@gmail.com"),
-                    SecurityStamp = string.Empty,
-                    Login = "atom54",
-                },
-                new User
-                {
-                    Id = "3b62472e-4f66-49fa-a20f-e7685b9125d8",
-                    UserName = "peppo@gmail.com",
-                    NormalizedUserName = "PEPPO@GMAIL.COM",
-                    Email = "peppo@gmail.com",
-                    NormalizedEmail = "PEPPO@GMAIL.COM",
-                    EmailConfirmed = true,
-                    PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "peppo@gmail.com"),
-                    SecurityStamp = string.Empty,
-                    Login = "peppo",
-                }
-            };
 
-            foreach (User d in users)
-            {
-                context.Users.Add(d);
-            }
-            context.SaveChanges();
 
             var status = new StatusCart[]
             {
@@ -125,6 +93,11 @@ namespace MainPr.Data
                 {
                     StatusCartID = 2,
                     StatusName = "Accepted",
+                },
+                new StatusCart
+                {
+                    StatusCartID = 3,
+                    StatusName = "Rejected",
                 }
             };
 
