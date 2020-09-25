@@ -101,11 +101,6 @@ namespace MainPr.Controllers
 
                 return RedirectToAction(nameof(Index));
 
-            //}
-            //else if (check.ItemID == test_orders.ItemID && check.Orders.UsersOrders.UserId == idUser && check.StatusCartID == 1)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
 
         }
 

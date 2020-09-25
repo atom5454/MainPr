@@ -25,7 +25,7 @@ namespace MainPr.Controllers
         {
             return View(_userManager.Users.ToList());
         }
-        public async Task<IActionResult> AcceptCart(string id)
+        public async Task<IActionResult> AdminCart(string id)
         {
             var applicationContext = _context.Carts
                 .Include(c => c.StatusCarts)
@@ -33,6 +33,45 @@ namespace MainPr.Controllers
                 .Include(c => c.Orders);
             return View(await applicationContext.ToListAsync());
         }
+        public IActionResult AcceptCart(int CartID)
+        {
+            try
+            {
+                (from p in _context.Carts
+                 where p.StatusCartID == 1
+                 where p.CartID == CartID
+                 select p)
+                 .ToList()
+                 .ForEach(x => x.StatusCartID = 2);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+            _context.SaveChanges();
+            return RedirectToAction("AdminCart");
+        }
+
+
+        public IActionResult RejectCart(int CartID)
+        {
+            try
+            {
+                (from p in _context.Carts
+                 where p.CartID == CartID
+                 select p)
+                 .ToList()
+                 .ForEach(x => x.StatusCartID = 3);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+            _context.SaveChanges();
+            return RedirectToAction("AdminCart");
+        }
+
+
 
         public IActionResult All_Users()
         {

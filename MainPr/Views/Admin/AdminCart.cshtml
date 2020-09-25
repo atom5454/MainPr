@@ -7,7 +7,7 @@
 <p>
     <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="All_Users">Users</a>
     <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Firms" asp-action="Index">Firms</a>
-    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="AcceptCart">Carts</a>
+    <a class="btn btn-sm btn-primary" asp-area="" asp-controller="Admin" asp-action="AdminCart">Carts</a>
 </p>
 
 <h1>Admin Cart</h1>
@@ -41,9 +41,11 @@
                 @Html.DisplayFor(modelItem => item.Orders.ItemID)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a class="btn btn-sm btn-success" asp-area="" asp-controller="Admin" asp-action="AcceptCart" asp-route-CartID="@item.CartID">Accepted</a>
+                <a class="btn btn-sm btn-danger" asp-area="" asp-controller="Admin" asp-action="RejectCart" asp-route-CartID="@item.CartID">Reject</a>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
 }
