@@ -53,14 +53,21 @@ namespace MainPr.Controllers
 
             var item = await _context.Items.FindAsync(id);
 
-            Orders cart = new Orders
-            {
-                ItemID = item.ItemID,
-                Price = item.Price,
-                CountBuy_item = 1,
-                StatusOrderID = 1,
-                UsersOrderID = idOrder
-            };
+            //Orders cart = new Orders
+            //{
+            //    ItemID = item.ItemID,
+            //    CountBuy_item = 1,
+            //    Price = item.Price * CountBuy_item,
+            //    StatusOrderID = 1,
+            //    UsersOrderID = idOrder
+            //};
+
+            Orders cart = new Orders();
+            cart.ItemID = item.ItemID;
+            cart.CountBuy_item = 1;
+            cart.Price = item.Price * cart.CountBuy_item;
+            cart.StatusOrderID = 1;
+            cart.UsersOrderID = idOrder;
 
             var check = _context.Orders
                 .Include(c => c.Items)
@@ -158,7 +165,7 @@ namespace MainPr.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, Orders orders)
+        public async Task<IActionResult> Edit(int? id, Orders orders, Item items)
         {
             if (id != orders.ItemID)
             {
@@ -169,6 +176,8 @@ namespace MainPr.Controllers
             {
                 try
                 {
+                    Item item = await _context.Items.FindAsync(id);
+                    orders.Price = item.Price * orders.CountBuy_item;
                     _context.Update(orders);
                     await _context.SaveChangesAsync();
                 }
@@ -193,7 +202,7 @@ namespace MainPr.Controllers
 
 
         // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? userId)
         {
             if (id == null)
             {
@@ -203,25 +212,24 @@ namespace MainPr.Controllers
             var orders = await _context.Orders
                 .Include(o => o.Items)
                 .Include(o => o.UsersOrders)
+                .Where(o => o.UsersOrderID == userId)
                 .FirstOrDefaultAsync(m => m.ItemID == id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
 
-            return View(orders);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var orders = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(orders);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Orders/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var orders = await _context.Orders.FindAsync(id);
+        //    _context.Orders.Remove(orders);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool OrdersExists(int id)
         {

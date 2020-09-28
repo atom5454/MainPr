@@ -42,21 +42,6 @@ namespace MainPr.Controllers
             User user = await _userManager.GetUserAsync(HttpContext.User);
             idUser = user?.Id;
 
-
-            //var test_orders = _context.Orders
-            //    .Include(o => o.Items)
-            //    .Include(o => o.UsersOrders)
-            //    .Where(o => o.StatusOrderID == 1)
-            //    .FirstOrDefault(o => o.UsersOrders.UserId == idUser);
-
-            //var check = _context.Carts
-            //    .Include(o => o.Orders)
-            //    .Include(o => o.Orders.UsersOrders)
-            //    .Where(o => o.ItemID == test_orders.ItemID)
-            //    .FirstOrDefault(o => o.Orders.UsersOrders.UserId == idUser);
-
-            //if(check == null)
-            //{
                 try
                 {
                         query = (from e in _context.Carts
@@ -205,40 +190,34 @@ namespace MainPr.Controllers
         }
 
         // GET: Carts/Delete/5
-        public async Task<IActionResult> Delete(int? id, int? iduser, int? iditem)
+        public async Task<IActionResult> Delete(int? idcart, int? iditem, int? iduserorder)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
             var cart = await _context.Carts
                 .Include(c => c.StatusCarts)
-                //.Where(c => c.UsersOrderID == iduser)
+                //.Where(c => c.UsersOrderID == iduserorder)
                 //.Where(c => c.ItemID == iditem)
-                .FirstOrDefaultAsync(m => m.CartID == id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
+                .FirstOrDefaultAsync(m => m.CartID == idcart);
 
-            return View(cart);
-        }
-
-        // POST: Carts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, int iduser, int iditem)
-        {
-            var cart = await _context.Carts
-                .Where(c => c.UsersOrderID == iduser)
-                .Where(c => c.ItemID == iditem)
-                .FirstOrDefaultAsync(m => m.CartID == id);
-                //.FindAsync(id, iduser, iditem);
             _context.Carts.Remove(cart);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //// POST: Carts/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id, int iduser, int iditem)
+        //{
+        //    var cart = await _context.Carts
+        //        .Where(c => c.UsersOrderID == iduser)
+        //        .Where(c => c.ItemID == iditem)
+        //        .FirstOrDefaultAsync(m => m.CartID == id);
+        //        //.FindAsync(id, iduser, iditem);
+        //    _context.Carts.Remove(cart);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool CartExists(int id)
         {

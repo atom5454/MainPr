@@ -21,20 +21,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusCarts.StatusCartID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orders.Items.ItemName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CartID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CartID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CartID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusCarts.StatusName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Orders.Items.ItemName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CartID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CartID">Details</a> |
+                    <a asp-action="Delete" asp-route-idcart="@item.CartID" asp-route-iditem="@item.ItemID" asp-route-iduserorder="@item.UsersOrderID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

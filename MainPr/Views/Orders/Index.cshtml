@@ -13,18 +13,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CountBuy_item)
+                Название
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Кол-во выбранного товара
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Items)
+                Цена
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsersOrders)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -32,16 +28,13 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Items.ItemName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.CountBuy_item)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Items.ItemID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UsersOrders.UsersOrderID)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ItemID" asp-route-userId="@item.UsersOrderID">Edit</a> |
@@ -49,6 +42,21 @@
                 </td>
             </tr>
         }
+        <tr>
+            <td></td>
+            <td>Всего</td>
+            <td>@Model.Sum(x => x.Price)</td>
+        </tr>
     </tbody>
 </table>
+
+<tfoot>
+    <tr>
+        <td colspan="4"></td>
+        <td>@TempData["sum_cart"]</td>
+
+    </tr>
+</tfoot>
+
+
 <p><a class="btn btn-sm btn-dark" asp-controller="Carts" asp-action="AddToCart">AddToCart</a></p> 

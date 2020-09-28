@@ -11,8 +11,8 @@ namespace CustomIdentityApp.Controllers
 {
     public class RolesController : Controller
     {
-        RoleManager<IdentityRole> _roleManager;
-        UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
         public RolesController(RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             _roleManager = roleManager;

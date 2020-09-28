@@ -35,6 +35,26 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.panel-default {
+    border-color: #dddddd;
+}
+
+.panel-default > .panel-heading {
+    color: #333333;
+    background-color: #f5f5f5;   
+    border-color: #dddddd;
+    }
+
+.panel-default > .panel-heading + .panel-collapse .panel-body {
+    border-top-color: #dddddd;
+}
+
+.panel-default > .panel-footer + .panel-collapse .panel-body {
+    border-bottom-color: #dddddd;
+}
+
+
+
 *,
 *::before,
 *::after {
