@@ -54,7 +54,6 @@ namespace MainPr.Controllers
             return RedirectToAction("AdminCart");
         }
 
-
         public IActionResult RejectCart(int CartID)
         {
             try
@@ -73,18 +72,15 @@ namespace MainPr.Controllers
             return RedirectToAction("AdminCart");
         }
 
-
-
         public IActionResult All_Users()
         {
             return View(_userManager.Users.ToList());
         }
 
-
         public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(RegisterViewModel model)
+        public async Task<IActionResult> CreateUser(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -147,7 +143,7 @@ namespace MainPr.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> DeleteUser(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user != null)
@@ -156,5 +152,16 @@ namespace MainPr.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

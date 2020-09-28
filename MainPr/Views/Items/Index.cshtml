@@ -1,60 +1,110 @@
 ﻿@model IEnumerable<MainPr.Models.Item>
+@using Microsoft.AspNetCore.Identity
+@using MainPr.Models
+@inject UserManager<User> UserManager
+@inject RoleManager<IdentityRole> roleManager
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Товары";
 }
 
-<h1>Index</h1>
+<h1>Товары</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Firms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImgPath)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
+@if (User.IsInRole("user"))
+{
+    <p></p>
+    <div class="row mt-5 mb-2">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firms.FirmName)
-            </td>
-            <td class="display-field">
-                <img src="~/img/@item.ImgPath" width="150" height="150" />
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ItemID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ItemID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ItemID">Delete</a> |
+            <div style="margin: 10px;">
+                <img class="display-field" src="~/img/@item.ImgPath" width="150" height="150" />
+                <h2>@item.ItemName</h2>
+                <p>@item.Title</p>
+                <p>@item.Firms.FirmName</p>
+                <p>@item.Price</p>
+
+                <a asp-action="Details" asp-route-id="@item.ItemID">Details</a>
                 <a asp-controller="Orders" asp-action="AddToOtrder" asp-route-id="@item.ItemID">AddToOtrder</a>
-            </td>
-        </tr>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+}
+else
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+    <div class="row mt-5 mb-2">
+        @foreach (var item in Model)
+        {
+            <div>
+                <img class="display-field" src="~/img/@item.ImgPath" width="150" height="150" />
+                <h2>@item.ItemName</h2>
+                <p>@item.Title</p>
+                <p>@item.Firms.FirmName</p>
+                <p>@item.Price</p>
+
+                <a asp-action="Edit" asp-route-id="@item.ItemID">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ItemID">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.ItemID">Delete</a>
+                <a asp-controller="Orders" asp-action="AddToOtrder" asp-route-id="@item.ItemID">AddToOtrder</a>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Firms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ImgPath)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firms.FirmName)
+                </td>
+                <td class="display-field">
+                    <img src="~/img/@item.ImgPath" width="150" height="150" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ItemID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ItemID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ItemID">Delete</a> |
+                    <a asp-controller="Orders" asp-action="AddToOtrder" asp-route-id="@item.ItemID">AddToOtrder</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>*@
