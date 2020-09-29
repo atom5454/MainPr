@@ -3,29 +3,25 @@
 @inject UserManager<User> UserManager
 
 
-<ul class="navbar-nav">
+<ul class="log-reg">
     @if (User.Identity.IsAuthenticated)
     {
-        <li class="nav-item">
+        <li>
+            <a asp-area="" asp-controller="PAcc" asp-action="Acc">@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Login</a>
         </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="" asp-controller="PAcc" asp-action="Acc">
-                <button type="submit" class="nav-link btn btn-link text-dark">@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Login</button>
-            </form>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+        <li>
+            <form asp-area="" asp-controller="Account" asp-action="Logout">
+                <button class="c-button" type="submit" >Logout</button>
             </form>
         </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Register">Register</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Login">Login</a>
         </li>
     }
 </ul>
