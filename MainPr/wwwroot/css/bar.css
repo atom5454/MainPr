@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
 
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
 .border-top {
     border-top: 1px solid #dee2e6 !important;
 }
@@ -60,12 +69,218 @@ footer {
 
 
 
+body {
+    background: #f2f2f2;
+}
+
+header {
+    padding-bottom: -30px;
+}
+
+nav {
+    background: #1b1b1b;
+    margin-bottom: 10px;
+}
+
+
+nav::after {
+    content: '';
+    clear: both;
+    display: table;
+}
+
+nav ul {
+    float: left;
+    list-style: none;
+    margin-right: 40px;
+    position: relative;
+}
+
+nav ul li {
+    display: inline-block;
+    background: #1b1b1b;
+    margin: 0 5px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    line-height: 70px;
+    font-size: 18px;
+    padding: 8px 15px;
+}
+
+
+nav ul li :hover {
+    color: orange;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff
+}
+
+nav a:hover {
+    color: orange;
+}
+
+/*.c-button {
+    border-radius: 5px;
+    background: #1b1b1b;
+    color: white;
+    padding: 8px 15px;
+    font-size: 18px;
+}
+
+    .c-button:hover {
+        color: cyan;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff
+    }*/
+
+
+.c-button {
+    border: 0;
+    border-radius: 5px;
+    background: #1b1b1b;
+    color: white;
+    padding: 8px 15px;
+    font-size: 18px;
+}
+
+.c-button:hover {
+    color: orange;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff
+}
+
+
+.log-reg {
+    float: right;
+    list-style: none;
+    margin-left: 40px;
+    position: relative;
+}
+
+nav ul ul li a:hover {
+    color: orange;
+    box-shadow: none;
+}
+
+nav ul ul {
+    /*border-top: 3px solid cyan;*/
+    position: absolute;
+    top: 90px;
+    opacity: 0;
+    visibility: hidden;
+    transition: top .3s;
+}
+
+nav ul ul ul {
+    border-top: none;
+}
+
+nav ul li:hover > ul {
+    top: 70px;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+
+}
+
+
+nav ul ul li {
+    position: relative;
+    margin: 0px;
+    width: 150px;
+    float: none;
+    display: list-item;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+
+nav ul ul li a {
+    line-height: 50px;
+}
+
+nav ul ul ul li {
+    position: relative;
+    top: -70px;
+    left: 150px;
+}
+
+nav a:hover {
+    text-decoration: none;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
+
+
 * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+
+
+.border-top {
+    border-top: 1px solid #dee2e6 !important;
+}
+
+footer {
+    margin-top: 10 px;
+    display: block;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+
+
+
+
+
+
+.button {
+    float: right;
+    list-style: none;
+    margin-right: 40px;
+    position: relative;
+}
+
+
+
 
 body {
     background: #f2f2f2;
@@ -77,50 +292,59 @@ header {
 
 nav {
     background: #1b1b1b;
+    margin-bottom: 10px;
 }
 
-    nav .logo {
-        float: left;
-        color: white;
-        font-size: 27px;
-        font-weight: 600;
-        line-height: 70px;
-        padding-left: 60px;
-        padding-right: 60px;
-    }
+nav .logo {
+    float: left;
+    color: white;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 70px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
 
-    nav::after {
-        content: '';
-        clear: both;
-        display: table;
-    }
 
-    nav ul {
-        float: left;
-        list-style: none;
-        margin-right: 40px;
-        position: relative;
-    }
 
-        nav ul li {
-            display: inline-block;
-            background: #1b1b1b;
-            margin: 0 5px;
-        }
+nav::after {
+    content: '';
+    clear: both;
+    display: table;
+}
 
-            nav ul li a {
-                color: white;
-                text-decoration: none;
-                line-height: 70px;
-                font-size: 18px;
-                padding: 8px 15px;
-            }
+nav ul {
+    float: left;
+    list-style: none;
+    margin-right: 40px;
+    position: relative;
+}
 
-                nav ul li a:hover {
-                    color: orange;
-                    border-radius: 5px;
-                    box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff
-                }
+nav ul li {
+    display: inline-block;
+    background: #1b1b1b;
+    margin: 0 5px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    line-height: 70px;
+    font-size: 18px;
+    padding: 8px 15px;
+}
+
+nav ul li a:hover {
+    color: orange;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff;
+}
+
+nav a:visited {
+    color: white;
+}
+
 
 
 /*.c-button {
@@ -161,48 +385,71 @@ nav {
     position: relative;
 }
 
-        nav ul ul li a:hover {
-            color: orange;
-            box-shadow: none;
-        }
-
-        nav ul ul {
-            /*border-top: 3px solid cyan;*/
-            position: absolute;
-            top: 90px;
-            opacity: 0;
-            visibility: hidden;
-            transition: top .3s;
-        }
-
-            nav ul ul ul {
-                border-top: none;
-            }
-
-        nav ul li:hover > ul {
-            top: 70px;
-            opacity: 1;
-            visibility: visible;
-        }
+.logo {
+    float: left;
+    color: white;
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 70px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
 
 
-        nav ul ul li {
-            position: relative;
-            margin: 0px;
-            width: 150px;
-            float: none;
-            display: list-item;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-        }
+nav ul ul li a:hover {
+    color: orange;
+    box-shadow: none;
+}
+
+nav ul ul {
+    /*border-top: 3px solid cyan;*/
+    position: absolute;
+    top: 90px;
+    opacity: 0;
+    visibility: hidden;
+    transition: top .3s;
+}
+
+nav ul {
+    border-top: none;
+}
+
+nav ul li:hover > ul {
+    top: 70px;
+    opacity: 1;
+    visibility: visible;
+    
+}
+
+
+nav ul ul li {
+    position: relative;
+    margin: 0px;
+    width: 150px;
+    float: none;
+    display: list-item;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
 
 
 
-            nav ul ul li a {
-                line-height: 50px;
-            }
+nav ul ul li a {
+    line-height: 50px;
+}
 
-        nav ul ul ul li {
-            position: relative;
-            top: -70px;
-            left: 150px;
-        }
+nav ul ul ul li {
+    position: relative;
+    top: -70px;
+    left: 150px;
+}
+
+.login {
+    margin-left: 35%;
+    width: 300px;
+    margin-top: 30px;
+    text-align: center;
+    border: 1px;
+    border-radius: 3px;
+    background-color: #928c8c;
+    box-shadow: 0 0 5px black, 0 0 5px black
+}
