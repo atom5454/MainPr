@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using MainPr.Models;
 using MainPr.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CustomIdentityApp.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

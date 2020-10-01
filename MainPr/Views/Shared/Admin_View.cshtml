@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MainPr.Models
+@inject UserManager<User> UserManager
+
+
+<ul>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="List">List</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+        <ul>
+            <li><a asp-controller="Admin" asp-action="All_Users">Users</a></li>
+            <li><a asp-controller="Firms" asp-action="Index">Firms</a></li>
+            <li><a asp-controller="Admin" asp-action="AcceptCart">Carts</a></li>
+        </ul>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">Items</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Carts" asp-action="Index">Cart</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+    </li>
+</ul>

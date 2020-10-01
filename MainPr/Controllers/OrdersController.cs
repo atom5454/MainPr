@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MainPr.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -21,29 +23,40 @@ namespace MainPr.Controllers
             _context = context;
         }
 
-        // GET: Orders
-        public async Task<IActionResult> Index(string id)
+        public async Task<string> TakeUserIDAsync()
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
-            id = user?.Id;
+             string UserID = user?.Id;
+
+            return UserID;
+        }
+
+        // GET: Orders
+        public async Task<IActionResult> Index(string UserID)
+        {
+            UserID = await TakeUserIDAsync();
 
             var applicationContext = _context.Orders
                 .Include(o => o.Items)
                 .Include(o => o.UsersOrders)
-                .Where(o => o.UsersOrders.UserId == id)
+                .Where(o => o.UsersOrders.UserId == UserID)
                 .Where(o =>o.StatusOrderID == 1);
             return View(await applicationContext.ToListAsync());
         }
 
-        public async Task<IActionResult> AddToOtrderAsync(string idUser, int id)
+        public async Task<IActionResult> AddToOtrderAsync(string UserID, int id)
         {
 
-            User user = await _userManager.GetUserAsync(HttpContext.User);
-            idUser = user?.Id;
+            UserID = await TakeUserIDAsync();
+
+            if (UserID == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
             UsersOrder order = new UsersOrder
             {
-                UserId = idUser
+                UserId = UserID
             };
 
             _context.Add(order);
@@ -72,7 +85,7 @@ namespace MainPr.Controllers
             var check = _context.Orders
                 .Include(c => c.Items)
                 .Include(c => c.UsersOrders)
-                .Where(c => c.UsersOrders.UserId == idUser)
+                .Where(c => c.UsersOrders.UserId == UserID)
                 .Where(o => o.StatusOrderID == 1)
                 .FirstOrDefault(c => c.ItemID == item.ItemID);
 
@@ -91,7 +104,7 @@ namespace MainPr.Controllers
             }
 
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index","Items");
         }
 
 

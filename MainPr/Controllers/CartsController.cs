@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MainPr.Controllers
 {
+    [Authorize]
     public class CartsController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -22,29 +24,35 @@ namespace MainPr.Controllers
             _context = context;
         }
 
-        //GET: Carts
-        public async Task<IActionResult> Index(string id)
+        public async Task<string> TakeUserIDAsync()
         {
             User user = await _userManager.GetUserAsync(HttpContext.User);
-            id = user?.Id;
+            string UserID = user?.Id;
+
+            return UserID;
+        }
+
+        //GET: Carts
+        public async Task<IActionResult> Index(string UserID)
+        {
+            UserID = await TakeUserIDAsync();
 
             var applicationContext = _context.Carts
                 .Include(c => c.StatusCarts)
                 .Include(c => c.Orders.Items)
                 .Include(c => c.Orders)
-                .Where(c => c.Orders.UsersOrders.UserId == id);
+                .Where(c => c.Orders.UsersOrders.UserId == UserID);
             return View(await applicationContext.ToListAsync());
         }
 
         [Obsolete]
-        public async Task<IActionResult> AddToCartAsync( string idUser, int query)
+        public async Task<IActionResult> AddToCartAsync( string UserID, int query)
         {
-            User user = await _userManager.GetUserAsync(HttpContext.User);
-            idUser = user?.Id;
+            UserID = await TakeUserIDAsync();
 
-                try
+            try
                 {
-                        query = (from e in _context.Carts
+                    query = (from e in _context.Carts
                             select e.CartID)
                             .Max();
                 }
@@ -59,13 +67,13 @@ namespace MainPr.Controllers
                     .Include(o => o.Items)
                     .Include(o => o.UsersOrders)
                     .Where(o => o.StatusOrderID == 1)
-                    .Where(o => o.UsersOrders.UserId == idUser);
+                    .Where(o => o.UsersOrders.UserId == UserID);
                 var orders = await applicationContext.ToListAsync();
 
 
                 (from p in _context.Orders
                  where p.StatusOrderID == 1
-                 where p.UsersOrders.UserId == idUser
+                 where p.UsersOrders.UserId == UserID
                  select p).ToList().ForEach(x => x.StatusOrderID = 2);
 
                 _context.SaveChanges();
@@ -203,21 +211,6 @@ namespace MainPr.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        //// POST: Carts/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id, int iduser, int iditem)
-        //{
-        //    var cart = await _context.Carts
-        //        .Where(c => c.UsersOrderID == iduser)
-        //        .Where(c => c.ItemID == iditem)
-        //        .FirstOrDefaultAsync(m => m.CartID == id);
-        //        //.FindAsync(id, iduser, iditem);
-        //    _context.Carts.Remove(cart);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         private bool CartExists(int id)
         {

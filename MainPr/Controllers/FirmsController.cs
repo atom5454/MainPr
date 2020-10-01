@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MainPr.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class FirmsController : Controller
     {
         private readonly ApplicationContext _context;

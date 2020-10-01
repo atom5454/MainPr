@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using MainPr.Models;
 using Microsoft.AspNetCore.Identity;
 using MainPr.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MainPr.Controllers
 {
+    [Authorize]
     public class PAccController : Controller
     {
 
