@@ -4,8 +4,9 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
-<form method="post" asp-controller="Account" asp-action="Register">
+<h1 style="text-align: center">Register</h1>
+
+<form method="post" class="login" asp-controller="Account" asp-action="Register">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
         <div>
@@ -29,6 +30,8 @@
         <span asp-validation-for="PasswordConfirm"></span>
     </div>
     <div>
+        <br />
         <input type="submit" value="Регистрация" />
     </div>
+    <br/>
 </form>

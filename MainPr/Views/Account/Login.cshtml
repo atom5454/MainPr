@@ -1,7 +1,9 @@
 ﻿@model LoginViewModel
 
-<h2>Autorization</h2>
-<form method="post" asp-controller="Account" asp-action="Login"
+
+<h2 style="text-align: center">Autorization </h2>
+<br />
+<form method="post" class="login" asp-controller="Account" asp-action="Login"
       asp-route-returnUrl="@Model.ReturnUrl">
     <div asp-validation-summary="ModelOnly"></div>
     <div>
@@ -10,11 +12,13 @@
         <span asp-validation-for="Email"></span>
     </div>
     <div>
+        <br />
         <label asp-for="Password"></label><br />
         <input asp-for="Password" />
         <span asp-validation-for="Password"></span>
     </div>
     <div>
+        <br />
         <label asp-for="RememberMe"></label><br />
         <input asp-for="RememberMe" />
     </div>
