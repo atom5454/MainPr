@@ -28,10 +28,10 @@
                         @Html.DisplayFor(modelItem => item.CartID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StatusCarts.StatusCartID)
+                        @Html.DisplayFor(modelItem => item.StatusCarts.StatusName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Orders.ItemID)
+                        @Html.DisplayFor(modelItem => item.Orders.Items.ItemName)
                     </td>
                     <td>
                         <a class="btn btn-sm btn-success" asp-area="" asp-controller="Admin" asp-action="AcceptCart" asp-route-CartID="@item.CartID">Accepted</a>

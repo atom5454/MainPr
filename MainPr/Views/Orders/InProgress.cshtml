@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MainPr.Models.Cart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>Index</h1>
+
+
+<table class="table" style="border-radius 5px;">
+    <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Кол-во выбранного товара
+            </th>
+            <th>
+                Товар
+            </th>
+            <th>
+                Цена
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CartID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.CountBuy_item)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.Items.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.Price)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -12,7 +12,7 @@
 }
 
 footer {
-    display: block;
+    height: 1px;
 }
 
 .text-muted {
@@ -421,3 +421,22 @@ nav ul ul ul li {
     background-color: #928c8c;
     box-shadow: 0 0 5px black, 0 0 5px black
 }
+
+
+.items-t {
+    margin: 10px;
+}
+
+    .items-t:hover {
+        border: 1px solid black;
+        border-radius: 2px;
+    }
+
+.items-t-name {
+    text-decoration: none;
+    color: black;
+}
+
+    .items-t-name:hover {
+        text-decoration: none;
+    }

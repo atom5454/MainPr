@@ -44,6 +44,26 @@ namespace MainPr.Controllers
             return View(await applicationContext.ToListAsync());
         }
 
+        public async Task<IActionResult> InProgressAsync(string UserID, int id)
+        {
+
+            UserID = await TakeUserIDAsync();
+
+            var orders = _context.Carts
+                .Include(c => c.Orders)
+                .Include(c => c.Orders.Items)
+                .Where(c => c.Orders.UsersOrders.UserId == UserID)
+                .Where(c => c.Orders.StatusOrderID == 2);
+
+
+            return View(await orders.ToListAsync());
+        }
+
+
+
+
+
+
         public async Task<IActionResult> AddToOtrderAsync(string UserID, int id)
         {
 
