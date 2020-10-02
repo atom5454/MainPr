@@ -1,59 +1,59 @@
 ﻿@model IEnumerable<MainPr.Models.Orders>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    @{
+        ViewData["Title"] = "Index";
+    }
 
-<h1>Index</h1>
+    <h1>Index</h1>
 
-<table class="table" style="border-radius 5px;">
-    <thead>
-        <tr>
-            <th>
-                Название
-            </th>
-            <th>
-                Кол-во выбранного товара
-            </th>
-            <th>
-                Цена
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table" style="border-radius 5px;">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Items.ItemName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CountBuy_item)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ItemID" asp-route-userId="@item.UsersOrderID">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ItemID" asp-route-userId="@item.UsersOrderID">Delete</a>
-                </td>
+                <th>
+                    Название
+                </th>
+                <th>
+                    Кол-во выбранного товара
+                </th>
+                <th>
+                    Цена
+                </th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Items.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountBuy_item)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ItemID" asp-route-userId="@item.UsersOrderID">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ItemID" asp-route-userId="@item.UsersOrderID">Delete</a>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td>Всего</td>
+                <td>@Model.Sum(x => x.Price)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <tfoot>
         <tr>
-            <td></td>
-            <td>Всего</td>
-            <td>@Model.Sum(x => x.Price)</td>
+            <td colspan="4"></td>
+            <td>@TempData["sum_cart"]</td>
+
         </tr>
-    </tbody>
-</table>
-
-<tfoot>
-    <tr>
-        <td colspan="4"></td>
-        <td>@TempData["sum_cart"]</td>
-
-    </tr>
-</tfoot>
+    </tfoot>
 
 
-<p><a class="av" asp-controller="Carts" asp-action="AddToCart">AddToCart</a></p> 
+    <a class="l-button-st" asp-controller="Carts" asp-action="AddToCart">AddToCart</a>

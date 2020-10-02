@@ -39,7 +39,7 @@ namespace MainPr.Controllers
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel {Email = user.Email, Login = user.Login, PhoneNumber = user.PhoneNumber, NormalizedUserName = user.NormalizedUserName };
+            EditUserViewModel model = new EditUserViewModel {Email = user.Email, Login = user.Login, PhoneNumber = user.PhoneNumber};
             return View(model);
         }
 
@@ -55,7 +55,6 @@ namespace MainPr.Controllers
                     user.Email = model.Email;
                     user.Login = model.Login;
                     user.PhoneNumber = model.PhoneNumber;
-                    user.NormalizedUserName = model.NormalizedUserName;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

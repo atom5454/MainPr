@@ -4,38 +4,39 @@
     ViewData["Title"] = "Acc";
 }
 
-<h1>Account</h1>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-12">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Login)
-        </dt>
-        <dd class="col-sm-12">
-            @Html.DisplayFor(model => model.Login)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class="col-sm-12">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedUserName)
-        </dt>
-        <dd class="col-sm-12">
-            @Html.DisplayFor(model => model.NormalizedUserName)
-        </dd>
-    </dl>
-</div>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="PAcc" asp-action="Edit">Edit</a>
-</li>
+</head>
+<h1>Your Account</h1>
+
+<body>
+
+    <div>
+        <hr />
+            <p>
+                <b>User Email</b>
+            </p>
+            <p>
+                @Html.DisplayFor(model => model.Email)
+            </p>
+            <p>
+                <b>Login</b>
+            </p>
+            <p>
+                @Html.DisplayFor(model => model.Login)
+            </p>
+            <p>
+                <b>PhoneNumber</b>
+            </p>
+            <p>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </p>
+            <div style="padding-top: 15px;">
+                <a class="l-button-st" style="margin-top 2px" asp-area="" asp-controller="PAcc" asp-action="Edit">Edit</a>
+            </div>
+
+    </div>
+</body>
+

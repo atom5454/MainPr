@@ -1,5 +1,22 @@
- Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. 
+Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets.
+
+.c-button-nw {
+    float: right;
+    list-style: none;
+    margin-right: 40px;
+    position: relative;
+}
+
+.c-button-nw:hover {
+    color: orange;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #33ffff, 0 0 5px #66ffff
+}
+
+
+
+
 
 .list-borders {
     margin: 10px;
