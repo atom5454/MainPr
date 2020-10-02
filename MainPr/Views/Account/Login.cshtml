@@ -1,28 +1,56 @@
 ﻿@model LoginViewModel
 
+@{
+    ViewData["Title"] = "Autorization";
+}
+@*<div class="login">
+        <h1>Autorization </h1>
 
-<h2 style="text-align: center">Autorization </h2>
-<br />
-<form method="post" class="login" asp-controller="Account" asp-action="Login"
-      asp-route-returnUrl="@Model.ReturnUrl">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+        <form method="post" asp-controller="Account" asp-action="Login"
+              asp-route-returnUrl="@Model.ReturnUrl">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="txt_field">
+                <label asp-for="Email"></label><br />
+                <input asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="txt_field">
+                <label asp-for="Password"></label><br />
+                <input asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="pass">
+                <label asp-for="RememberMe"></label><br />
+                <input asp-for="RememberMe" />
+            </div>
+            <div>
+                <input type="submit" value="Войти" />
+            </div>
+
+        </form>
+    </div>*@
+
+
+<div class="login-form">
+    <div class="text">
+        LOGIN
     </div>
-    <div>
+    <form method="post" asp-controller="Account" asp-action="Login"
+          asp-route-returnUrl="@Model.ReturnUrl">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="field">
+            <div class="fas fa-envelope">
+            </div>
+            <input type="email" placeholder="Email" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="field">
+            <div class="fas fa-lock">
+            </div>
+            <input asp-for="Password" placeholder="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
         <br />
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div>
-        <br />
-        <label asp-for="RememberMe"></label><br />
-        <input asp-for="RememberMe" />
-    </div>
-    <div>
-        <input type="submit" value="Войти" />
-    </div>
-</form>
+        <button>LOGIN</button>
+    </form>
+</div>
