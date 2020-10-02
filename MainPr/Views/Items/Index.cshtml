@@ -18,13 +18,13 @@
 <ul style="list-style: none;" class="catalog-grid">
     @foreach (var item in Model)
     {
-        <li style="margin: 10px;">
+        <li class="items-t">
             <div class="goods-tile" data-title="">
                 <a class="goods-tile__picture" a href="https://localhost:44378/Items/Details/@item.ItemID">
                     <img class="display-field" src="~/img/@item.ImgPath" width="150" height="150" />
                 </a>
                 <a class="goods-text-title" href="https://localhost:44378/Items/Details/@item.ItemID">
-                    <p class="test-op">@item.ItemName</p>
+                    <p class="items-t-name">@item.ItemName</p>
 
                 </a>
 
